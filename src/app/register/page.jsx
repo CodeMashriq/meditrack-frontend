@@ -1,4 +1,4 @@
-"use client"
+'use client'
 import Image from "next/image"
 import Link from "next/link"
 import { useForm } from "react-hook-form"
@@ -19,7 +19,6 @@ export default function Register() {
   const onSubmit = ({username,email,password}) => {
     RegisterPatient(username,email,password)
   }
-  
   const handleSecure = () => {
     setSecure(!secure)
   }
@@ -33,17 +32,21 @@ export default function Register() {
   }, [api])
 
   const { done } = useStore()
+  
   console.log("done:",done,"isSubmitSuccessful",isSubmitSuccessful)
+
   useEffect(() => {
     if(isSubmitSuccessful && done == true) {
       reset()
       openNotificationWithIcon("success","Register is done")
+      useStore.setState({ done: undefined })
     }
     else if(isSubmitSuccessful && done == false) {
       openNotificationWithIcon("error","Register failed, Something went wrong")
+      useStore.setState({ done: undefined })
     }
   }, [isSubmitSuccessful,done,reset,openNotificationWithIcon])
-
+  
   return(
     <> 
       {contextHolder}
@@ -100,10 +103,6 @@ export default function Register() {
                     required:{
                       value: true,
                       message: "*password is required",
-                    },
-                    pattern:{
-                      value: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/,
-                      message: "*password is invalid"
                     }
                   })}
                   />
@@ -118,7 +117,7 @@ export default function Register() {
               </label>
               <button disabled={!isDirty||isSubmitting} className="mt-2 mb-10 bg-black text-white p-[6px] border rounded-[4px]">Sign Up</button>
               </form> 
-            <p className="text-gray-400">Already have an account? <Link href="/" className="text-black">Login here</Link></p>
+            <p className="text-gray-400">Already have an account? <Link href="/login" className="text-black">Login here</Link></p>
         </div>
       </div>
     </>

@@ -1,19 +1,22 @@
+'use client'
 import { registerUrl } from '@/api/urls'
 import axios from 'axios'
 import { useStore } from '@/store/Store'
 
-const RegisterPatient = async (username,email,passowrd) => {
-    
+const RegisterPatient = async (username,email,password) => {
+   
     await axios.post(registerUrl,{
         username,
         email,
-        passowrd,
+        password,
     })
-    .then(function() {
+    .then(function(res) {
         useStore.setState({done: true})
+        console.log(res)
     })
-    .catch(function() {
+    .catch(function(err) {
         useStore.setState({done: false})
+        console.log(err)
     })
 
 }
