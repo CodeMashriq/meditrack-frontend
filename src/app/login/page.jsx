@@ -41,6 +41,7 @@ export default function Register() {
     if(isSubmitSuccessful && done == true) {
       reset()
       useStore.setState({ done: undefined })
+      redirect('/')
     }
     else if(isSubmitSuccessful && done == false) {
       openNotificationWithIcon("error","login failed, Something went wrong")
