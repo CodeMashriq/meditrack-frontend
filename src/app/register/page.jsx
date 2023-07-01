@@ -6,7 +6,7 @@ import { useState, useEffect, useCallback } from "react"
 import { AiOutlineEye } from "react-icons/ai" 
 import { AiOutlineEyeInvisible } from "react-icons/ai"
 import { notification } from "antd"
-import RegisterPatient from "@/components/RegisterPatient"
+import RegisterPatient from "@/components/signpatient/RegisterPatient"
 import { useStore } from "@/store/Store"
 
 export default function Register() { 

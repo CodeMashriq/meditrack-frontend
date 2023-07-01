@@ -6,7 +6,7 @@ import { useState, useEffect, useCallback } from "react"
 import { AiOutlineEye } from "react-icons/ai" 
 import { AiOutlineEyeInvisible } from "react-icons/ai"
 import { notification } from "antd"
-import LoginPatient from "@/components/LoginPatient"
+import LoginPatient from "@/components/signpatient/LoginPatient"
 import { useStore } from "@/store/Store"
 import { redirect } from 'next/navigation'
 
