@@ -4,7 +4,7 @@ import axios from 'axios'
 import { useStore } from '@/store/Store'
 
 const RegisterPatient = async (username,email,password) => {
-   
+
     await axios.post(registerUrl,{
         username,
         email,

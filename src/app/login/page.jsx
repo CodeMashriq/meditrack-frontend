@@ -14,11 +14,11 @@ export default function Register() {
 
   const [secure, setSecure] = useState(true)
   const form = useForm()
-  const { register, handleSubmit, formState, reset } = form
+  const { register, handleSubmit, formState } = form
   const { errors, isDirty, isSubmitting, isSubmitSuccessful } = formState
 
-  const onSubmit = ({username,email,password}) => {
-    LoginPatient(username,email,password)
+  const onSubmit = ({username,password}) => {
+    LoginPatient(username,password)
   }
   
   const handleSecure = () => {
@@ -39,15 +39,12 @@ export default function Register() {
 
   useEffect(() => {
     if(isSubmitSuccessful && done == true) {
-      reset()
-      useStore.setState({ done: undefined })
       redirect('/')
     }
     else if(isSubmitSuccessful && done == false) {
       openNotificationWithIcon("error","login failed, Something went wrong")
-      useStore.setState({ done: undefined })
     }
-  }, [isSubmitSuccessful,done,reset,openNotificationWithIcon])
+  }, [isSubmitSuccessful,done,openNotificationWithIcon])
 
   return(
     <> 
@@ -78,25 +75,6 @@ export default function Register() {
                 </div>
               </label>
 
-              <label htmlFor="email">
-              Email Address
-              <div>
-                <input type="email" id="email" className="p-2 bg-gray-200 border rounded-[4px] w-full"
-                {...register("email",{
-                  required:{
-                    value: true,
-                    message: "*email address is required",
-                  },
-                  pattern:{
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message: "*email is invalid"
-                  }
-                })}
-                />
-                <h1 className="text-red-600">{errors.email?.message}</h1>
-              </div>
-            </label>
-              
               <label htmlFor="password" className="relative">
                 Password
                 <div className="realtive">

@@ -1,15 +1,20 @@
 "use client"
-import CreateProfile from "@/components/profilepatient/CreateProfile";
-import CurrentDate from "@/components/CurrentDate";
-import Checkbox from "@/components/form/Checkbox";
-import Input from "@/components/form/Input";
-import Option from "@/components/form/Option";
-import Select from "@/components/form/Select";
+
+import CreateProfile from "@/components/profilepatient/CreateProfile"
+import CurrentDate from "@/components/CurrentDate"
+import Checkbox from "@/components/form/Checkbox"
+import Input from "@/components/form/Input"
+import Option from "@/components/form/Option"
+import Select from "@/components/form/Select"
+import { notification } from "antd"
 import { useForm } from "react-hook-form"
+import { useStore } from "@/store/Store"
+import { redirect } from "next/navigation"
+
 
 export default function Profile() { 
-
-  const patientId = "64a07bd14f5a1b2bc67eca9f"
+  
+  const done = useStore((state) =>state.done)
 
   const form = useForm({
     defaultValues:{
@@ -17,15 +22,34 @@ export default function Profile() {
     }
   })
   
-  const { register, handleSubmit, formState, reset } = form
+  const { register, handleSubmit, formState } = form
   const { errors, isDirty, isSubmitting, isSubmitSuccessful } = formState
 
   const onSubmit = (data) => {
-    CreateProfile(data,patientId)
+    CreateProfile(data)
   }
+
+  const [api, contextHolder] = notification.useNotification();
+  
+  const openNotificationWithIcon = (type, message) => {
+    api[type]({
+      message,
+    })
+  }
+
+  if (isSubmitSuccessful == true && done == true){
+    redirect("/")
+  }
+  else if(isSubmitSuccessful == true && done == false){
+    openNotificationWithIcon("error","Error, something went wrong")
+    useStore.setState({done: undefined})
+  }
+
+  console.log("done:",done,",","isSubmitSuccessful:",isSubmitSuccessful)
 
   return(
     <> 
+      {contextHolder}
       <div className="grid xs:gap-6 md:gap-10 lg:gap-12 xs:pt-4 md:pt-12">
         <h1 className="xs:text-2xl md:text-3xl lg:text-4xl xs:pl-6 md:pl-12 lg:pl-16 xl:pl-24">Please fill your info:</h1>
         <form className="grid xs:gap-10 md:gap-14 mb-8" onSubmit={handleSubmit(onSubmit)} noValidate>
